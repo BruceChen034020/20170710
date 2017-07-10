@@ -1,0 +1,137 @@
+<script type="text/javascript">
+(function () {
+    var height = 400;
+    var width = 500;
+    var output_width=150;
+    var stage = document.getElementById("block1");//newElement("stage");
+    var button=document.getElementById("button1");
+    var counter=0;
+    var storedCalculations={};
+    function judgePrime(text)
+    {
+        var e="\uFF01";
+        if(text.length===0)return "︽"+e;
+        if(isNaN(text))return "ぃ琌计"+e;
+        var v=parseInt(text);
+        if(isNaN(v))return "ぃ琌计"+e;
+        if(text.indexOf(".")!==-1)return "ぃΤ计翴"+e;
+        if(v<0)return "硂琌璽计"+e;
+        if(v===0)return "硂琌0"+e+(Math.random()<0.1?"(计而厩tangentボ\uFF1A\"0!\"=\"1\"\uFF0C琌⊿岿罢...XD)":"");
+        if(v===1)return "ぃ琌借计"+(Math.random()<0.1?"(ぃ恨稱ぃ稱璶\uFF0C1常ぃ琌借计瓳\uFF5E硂琌砏﹚XD)":"");
+        if(v>9007199254740992-1)return "计び"+e;
+        if(v in storedCalculations)return storedCalculations[v];
+        else
+        {
+            var i;
+            ans="借计: "+v.toString();
+            for(i=2;i*i<=v;i++)if(v%i===0){
+                ans="т借计: "+i.toString();
+                break;
+            }
+            storedCalculations[v]=ans;
+            return ans;
+        }
+    }
+    function textChangeEvent() {
+        var texts=input.value.split("\n");
+        var ans="";
+        var i;
+        output.value="璸衡い...";
+        window.requestAnimationFrame(function(){
+        for(i=0;i<texts.length;i++)
+        {
+            ans+=judgePrime(texts[i]);
+            ans+="\n";
+        }
+        output.value=ans;
+        span.innerHTML=ans;});
+        counter+=1;
+        button.innerHTML="眏璸衡 #"+counter.toString();
+    }
+    function buttonClickEvent(event){
+        var texts=input.value.split("\n");
+        var ans="";
+        var i;
+        output.value="璸衡い...";
+        for(i=0;i<texts.length;i++)
+        {
+            ans+=judgePrime(texts[i]);
+            ans+="\n";
+        }
+        output.value=ans;
+        span.innerHTML=ans;
+        counter+=1;
+        button.innerHTML="眏璸衡 #"+counter.toString();
+    }
+    var input = newTextArea("input");
+    var output=newTextArea("output","div");
+    var pre = document.createElement("pre");
+    var span=document.createElement("span");
+    {
+        //document.body.appendChild(stage);
+        //stage.style.display = "block";
+        stage.style.position = "relative";
+        //stage.style.width = width.toString()+"px";
+        //stage.style.height = height.toString()+ "px";
+        //stage.style.backgroundColor = "rgb(224,224,224)";
+    }
+    {
+        //document.body.appendChild(stage);
+        stage.appendChild(pre);
+        pre.style.fontFamily = "Consolas";
+        pre.style.fontSize = "15px";
+        pre.style.lineHeight = "20px";
+        pre.style.display = "block";
+        pre.style.visibility = "hidden";
+        pre.value = "";
+    }
+    {
+        //document.body.appendChild(stage);
+        pre.appendChild(span);
+        span.style.fontFamily = "Consolas";
+        span.style.fontSize = "15px";
+        span.innerHTML="<br/>";
+        pre.appendChild(document.createElement("br"));
+    }
+    {
+        stage.appendChild(output);
+        output.style.left = "0px";
+        output.style.top = "0px";
+        output.style.width = output_width.toString()+"px";
+        output.style.height = "100%";//(height - 5).toString() + "px";
+        output.value = "";
+    }
+    {
+        stage.appendChild(input);
+        input.style.left = (output_width+5).toString()+"px";
+        input.style.top = "0px";
+        input.style.width = (width-output_width-5).toString()+"px";
+        input.style.height = "100%";//(height - 5).toString() + "px";
+        input.placeholder="叫块计...";
+        input.value = "hello\n-100\n0\n1\n2\n12345567777777\n123455677777777\n1234556777777777\n2147483647\n\nend";
+        input.addEventListener('input', textChangeEvent, false);
+        textChangeEvent();
+        //input.onkeyup="autogrow(this);";
+    }
+    {
+        button.addEventListener("click",buttonClickEvent,false);
+    }
+    function newTextArea(id) {
+        var answer = newElement(id, "textarea");
+        answer.style.lineHeight = "20px";
+        answer.wrap = "off";
+        //answer.style.overflowX = "scroll";
+        return answer;
+    }
+    function newElement(id, type) {
+        if (typeof (type) === "undefined") type = "div";
+        var answer = document.createElement(type);
+        if (typeof (id) === "string") answer.id = id;
+        //answer.style.display = "block";
+        answer.style.position = "absolute";
+        answer.style.fontFamily = "Consolas";
+        answer.style.fontSize = "15px";
+        return answer;
+    };
+}());
+</script>
